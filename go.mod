@@ -1,4 +1,4 @@
-module github.com/jalapeno-sdn/jalapeno/lsv4_edge
+module github.com/jalapeno-sdn/lsv4-edge
 
 go 1.15
 
