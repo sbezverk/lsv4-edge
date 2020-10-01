@@ -1,4 +1,4 @@
-REGISTRY_NAME?=docker.io/sbezverk
+REGISTRY_NAME?=docker.io/iejalapeno
 IMAGE_VERSION?=0.0.0
 
 .PHONY: all gobmp lsv4_edge container push clean test
@@ -9,17 +9,17 @@ else
 TESTARGS =
 endif
 
-all: lsv4_edge
+all: lsv4-edge
 
 lsv4_edge:
 	mkdir -p bin
-	$(MAKE) -C ./cmd/lsv4_edge compile-lsv4_edge
+	$(MAKE) -C ./cmd/lsv4-edge compile-lsv4-edge
 
-lsv4_edge-container: lsv4_edge
-	docker build -t $(REGISTRY_NAME)/lsv4_edge:$(IMAGE_VERSION) -f ./build/Dockerfile.lsv4_edge .
+lsv4_edge-container: lsv4-edge
+	docker build -t $(REGISTRY_NAME)/lsv4-edge:$(IMAGE_VERSION) -f ./build/Dockerfile.lsv4-edge .
 
 push: lsv4_edge-container
-	docker push $(REGISTRY_NAME)/lsv4_edge:$(IMAGE_VERSION)
+	docker push $(REGISTRY_NAME)/lsv4-edge:$(IMAGE_VERSION)
 
 clean:
 	rm -rf bin

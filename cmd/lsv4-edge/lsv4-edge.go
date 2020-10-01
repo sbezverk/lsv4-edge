@@ -7,8 +7,8 @@ import (
 	"runtime"
 
 	"github.com/golang/glog"
-	"github.com/jalapeno-sdn/lsv4_edge/pkg/arangodb"
-	"github.com/jalapeno-sdn/lsv4_edge/pkg/kafkamessenger"
+	"github.com/jalapeno-sdn/lsv4-edge/pkg/arangodb"
+	"github.com/jalapeno-sdn/lsv4-edge/pkg/kafkamessenger"
 
 	_ "net/http/pprof"
 )
