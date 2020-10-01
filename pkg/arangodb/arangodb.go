@@ -7,7 +7,7 @@ import (
 
 	driver "github.com/arangodb/go-driver"
 	"github.com/golang/glog"
-	"github.com/jalapeno-sdn/jalapeno/lsv4_edge/pkg/dbclient"
+	"github.com/jalapeno-sdn/topology/pkg/dbclient"
 	notifier "github.com/jalapeno-sdn/topology/pkg/kafkanotifier"
 	"github.com/sbezverk/gobmp/pkg/bmp"
 	"github.com/sbezverk/gobmp/pkg/message"
@@ -16,15 +16,15 @@ import (
 
 const (
 	concurrentWorkers = 1024
-	ls_linkCollection  = "LSLink"
-	lsv4Collection     = "LSv4"
+	ls_linkCollection = "LSLink"
+	lsv4Collection    = "LSv4"
 	//rtCollection      = "RT_L3VPN_Test"
 )
 
 type arangoDB struct {
 	dbclient.DB
 	*ArangoConn
-	stop chan struct{}
+	stop    chan struct{}
 	ls_link driver.Collection
 	lsv4    driver.Collection
 	//rt    driver.Collection
@@ -46,7 +46,7 @@ func NewDBSrvClient(arangoSrv, user, pass, dbname string) (dbclient.Srv, error) 
 		return nil, err
 	}
 	arango := &arangoDB{
-		stop:  make(chan struct{}),
+		stop: make(chan struct{}),
 		//store: make(map[string][]string),
 	}
 	arango.DB = arango
@@ -104,7 +104,7 @@ func (a *arangoDB) GetArangoDBInterface() *ArangoConn {
 }
 
 func (a *arangoDB) ProcessMessage(msgType int, msg []byte) error {
-	if msgType != bmp.LSLINKMsg {
+	if msgType != bmp.LSLinkMsg {
 		return fmt.Errorf("unsupported message type %d", msgType)
 	}
 	event := &notifier.EventMessage{}
@@ -135,7 +135,8 @@ func (a *arangoDB) loadStore() error {
 	defer cursor.Close()
 	for {
 		var p message.LSLink
-		meta, err := cursor.ReadDocument(ctx, &p)
+
+		_, err := cursor.ReadDocument(ctx, &p)
 		if driver.IsNoMoreDocuments(err) {
 			break
 		} else if err != nil {
@@ -143,9 +144,10 @@ func (a *arangoDB) loadStore() error {
 		}
 		//if err := a.processAddRouteTargets(ctx, meta.Key, meta.ID.String(), p.BaseAttributes.ExtCommunityList); err != nil {
 		//	return err
-		}
+		// }
 	}
-	glog.Infof("Store after initialization: %+v", a.store)
+
+	//	glog.Infof("Store after initialization: %+v", a.store)
 
 	return nil
 }

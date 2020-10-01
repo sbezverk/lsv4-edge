@@ -8,7 +8,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/jalapeno-sdn/lsv4-edge/pkg/arangodb"
-	"github.com/jalapeno-sdn/lsv4-edge/pkg/kafkamessenger"
+	"github.com/jalapeno-sdn/topology/pkg/kafkamessenger"
 
 	_ "net/http/pprof"
 )
